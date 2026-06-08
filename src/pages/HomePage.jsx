@@ -1,37 +1,76 @@
-import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
+import {
+  PageSection,
+  HeroCard,
+  HeroIcon,
+  HeroContent,
+  HeroBadge,
+  InfoGrid,
+  InfoCard,
+  FeatureRow,
+  FeatureChip,
+} from '../styles/HomePage.styles';
 
 function HomePage() {
   return (
-    <Stack spacing={3}>
-      <Card sx={{ borderRadius: 4, backgroundColor: 'rgba(7,17,29,0.92)', border: '1px solid rgba(148,163,184,0.18)' }}>
-        <CardContent>
-          <Chip label="Protótipo React" color="info" sx={{ mb: 2 }} />
-          <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>Monitor de Enchentes - Minas Gerais</Typography>
-          <Typography color="text.secondary">Apresentação do projeto, problema, proposta e impacto em uma interface responsiva com tema dark.</Typography>
-        </CardContent>
-      </Card>
+    <PageSection>
+      <HeroCard>
+        <HeroIcon>🌊</HeroIcon>
+        <HeroContent>
+          <p className="eyebrow">Sistema de Monitoramento Hídrico</p>
+          <h2>Monitor de Enchentes — Minas Gerais</h2>
+          <p>
+            Dashboard responsivo com dados meteorológicos reais, simulação de alertas e visualização
+            de risco para apoio à tomada de decisão em situações de enchente.
+          </p>
+        </HeroContent>
+        <HeroBadge>
+          <span className="badge-num">4</span>
+          <span className="badge-label">Municípios
+Monitorados</span>
+        </HeroBadge>
+      </HeroCard>
 
-      <section className="page-grid">
-        <article className="page-card wide-card">
-          <p className="eyebrow">Problema</p>
-          <h2>Por que a resposta precisa ser mais rápida?</h2>
-          <p>Chuvas intensas, rios em elevação e comunicação tardia aumentam o risco para comunidades em Minas Gerais. O desafio é transformar dados em uma visão clara e ágil para apoio à decisão.</p>
-        </article>
+      <InfoGrid>
+        <InfoCard $kind="problema">
+          <p className="eyebrow">⚠ Problema</p>
+          <h3>Por que a resposta precisa ser mais rápida?</h3>
+          <p>
+            Chuvas intensas, rios em elevação e comunicação tardia aumentam o risco para
+            comunidades em Minas Gerais. O desafio é transformar dados em visão clara e ágil
+            para apoio à decisão.
+          </p>
+        </InfoCard>
 
-        <article className="page-card">
-          <p className="eyebrow">Proposta</p>
+        <InfoCard $kind="proposta">
+          <p className="eyebrow">💡 Proposta</p>
           <h3>Uma solução visual e simulada</h3>
-          <p>Combina clima real, simulação de nível do rio e alertas automáticos para mostrar cenários de risco em um mapa interativo.</p>
-        </article>
+          <p>
+            Combina clima real, simulação de nível do rio e alertas automáticos para mostrar
+            cenários de risco em um mapa interativo com indicadores de severidade padronizados.
+          </p>
+        </InfoCard>
 
-        <article className="page-card">
-          <p className="eyebrow">Impacto</p>
+        <InfoCard $kind="impacto">
+          <p className="eyebrow">✅ Impacto</p>
           <h3>Mais tempo para agir</h3>
-          <p>Com indicadores simples e alertas claros, gestores e equipes de resposta podem priorizar áreas e planejar ações preventivas.</p>
-        </article>
-      </section>
-    </Stack>
+          <p>
+            Com indicadores simples e alertas claros, gestores e equipes de resposta podem
+            priorizar áreas e planejar ações preventivas com antecedência.
+          </p>
+        </InfoCard>
+      </InfoGrid>
+
+      <FeatureRow>
+        <FeatureChip><span className="chip-icon">🗺️</span> Mapa interativo em tempo real</FeatureChip>
+        <FeatureChip><span className="chip-icon">📊</span> KPIs de risco por município</FeatureChip>
+        <FeatureChip><span className="chip-icon">🔴</span> Alertas críticos automáticos</FeatureChip>
+        <FeatureChip><span className="chip-icon">🌧️</span> Dados de chuva e nível do rio</FeatureChip>
+        <FeatureChip><span className="chip-icon">🎨</span> Tema dark com cores semânticas</FeatureChip>
+      </FeatureRow>
+    </PageSection>
   );
 }
 
 export default HomePage;
+
+ 

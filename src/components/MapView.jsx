@@ -1,87 +1,20 @@
-import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { calcularRisco } from '../utils/riskCalculator';
-
-const MapCard = styled.section`
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(7, 17, 29, 0.98));
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  border-radius: 22px;
-  box-shadow: 0 18px 36px rgba(8, 15, 24, 0.42);
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-  height: 520px;
-`;
-
-const LegendOverlay = styled.div`
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  background: rgba(7, 17, 29, 0.88);
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  border-radius: 12px;
-  padding: 12px;
-  z-index: 1000;
-  min-width: 160px;
-  backdrop-filter: blur(8px);
-
-  h3 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #38bdf8;
-    margin: 0 0 10px 0;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: #dbeafe;
-
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .dot.low { background: #22c55e; }
-    .dot.medium { background: #fbbf24; }
-    .dot.high { background: #ef4444; }
-  }
-`;
-
-const PlaceholderDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  color: #cbd5e1;
-  font-size: 1rem;
-  text-align: center;
-  flex-direction: column;
-`;
+import {
+  MapCard,
+  MapHeaderOverlay,
+  LegendOverlay,
+  PlaceholderDiv,
+  riskMeta,
+} from '../styles/MapView.styles';
 
 const iconByRisk = {
   baixo: new L.DivIcon({
     className: 'risk-marker low',
     html: '<span></span>',
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
   }),
   medio: new L.DivIcon({
     className: 'risk-marker medium',
@@ -92,8 +25,8 @@ const iconByRisk = {
   alto: new L.DivIcon({
     className: 'risk-marker high',
     html: '<span></span>',
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
   }),
 };
 
@@ -102,30 +35,14 @@ function MapView({ cities }) {
     return (
       <MapCard>
         <PlaceholderDiv>
-          <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🗺️</div>
-          <p style={{ margin: 0 }}>Nenhum dado disponível para visualizar no mapa</p>
+          <div style={{ fontSize: '2.5rem' }}>🗺️</div>
+          <p style={{ margin: 0, color: '#64748b' }}>Nenhum dado disponível para visualizar no mapa</p>
         </PlaceholderDiv>
       </MapCard>
     );
   }
 
-  const getRiskColor = (risco) => {
-    switch (risco) {
-      case 'alto': return '#ef4444';
-      case 'medio': return '#fbbf24';
-      case 'baixo': return '#22c55e';
-      default: return '#38bdf8';
-    }
-  };
-
-  const getRiskLabel = (risco) => {
-    switch (risco) {
-      case 'alto': return 'ALTO';
-      case 'medio': return 'MÉDIO';
-      case 'baixo': return 'BAIXO';
-      default: return 'DESCONHECIDO';
-    }
-  };
+  const highCount = cities.filter(c => calcularRisco(c) === 'alto').length;
 
   return (
     <MapCard>
@@ -137,6 +54,7 @@ function MapView({ cities }) {
 
         {cities.map((city) => {
           const risco = calcularRisco(city);
+          const meta = riskMeta[risco] || riskMeta.baixo;
 
           return (
             <Marker
@@ -145,29 +63,57 @@ function MapView({ cities }) {
               icon={iconByRisk[risco]}
             >
               <Popup>
-                <div style={{ padding: '8px', minWidth: '200px', color: '#0f172a' }}>
-                  <div style={{ fontWeight: 700, marginBottom: '8px', fontSize: '1rem' }}>
-                    {city.name}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <span
-                      style={{
-                        backgroundColor: getRiskColor(risco),
-                        color: '#fff',
-                        fontWeight: 700,
-                        fontSize: '0.75rem',
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                      }}
-                    >
-                      {getRiskLabel(risco)}
+                <div style={{
+                  fontFamily: 'Inter, Arial, sans-serif',
+                  background: '#0f172a',
+                  color: '#eff6ff',
+                  borderRadius: '12px',
+                  padding: '14px',
+                  minWidth: '210px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <div style={{ fontWeight: 800, fontSize: '1rem', color: '#eff6ff' }}>{city.name}</div>
+                    <span style={{
+                      background: meta.color,
+                      color: meta.textColor,
+                      fontWeight: 700,
+                      fontSize: '0.65rem',
+                      padding: '3px 8px',
+                      borderRadius: '5px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                    }}>
+                      {meta.emoji} {meta.label}
                     </span>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.85rem' }}>
-                    <div>💧 Chuva 24h: <strong>{city.chuva24h}%</strong></div>
-                    <div>🌊 Nível do rio: <strong>{city.nivelRio.toFixed(1)} m</strong></div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontSize: '0.8rem', color: '#64748b' }}>
+                        <span>💧 Chuva 24h</span>
+                        <strong style={{ color: '#eff6ff' }}>{city.chuva24h}%</strong>
+                      </div>
+                      <div style={{ height: '4px', background: 'rgba(148,163,184,0.12)', borderRadius: '999px', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', width: `${Math.min(100, city.chuva24h)}%`, background: meta.color, borderRadius: '999px', opacity: 0.85 }} />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontSize: '0.8rem', color: '#64748b' }}>
+                        <span>🌊 Nível do rio</span>
+                        <strong style={{ color: '#eff6ff' }}>{city.nivelRio.toFixed(1)} m</strong>
+                      </div>
+                      <div style={{ height: '4px', background: 'rgba(148,163,184,0.12)', borderRadius: '999px', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', width: `${Math.min(100, (city.nivelRio / 6) * 100)}%`, background: '#38bdf8', borderRadius: '999px', opacity: 0.75 }} />
+                      </div>
+                    </div>
+
                     {city.temperatura && (
-                      <div>🌡️ Temperatura: <strong>{city.temperatura}°C</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#64748b', paddingTop: '2px', borderTop: '1px solid rgba(148,163,184,0.1)' }}>
+                        <span>🌡️ Temperatura</span>
+                        <strong style={{ color: '#eff6ff' }}>{city.temperatura}°C</strong>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -177,16 +123,37 @@ function MapView({ cities }) {
         })}
       </MapContainer>
 
+      <MapHeaderOverlay>
+        🗺️ Minas Gerais &nbsp;·&nbsp; <span className="count">{cities.length}</span> municípios
+        {highCount > 0 && <>&nbsp;·&nbsp; <span style={{ color: '#fca5a5' }}>⚠ {highCount} crítico{highCount > 1 ? 's' : ''}</span></>}
+      </MapHeaderOverlay>
+
       <LegendOverlay>
-        <h3>Legenda</h3>
+        <h3>Nível de Risco</h3>
         <ul>
-          <li><span className="dot low"></span> Baixo risco</li>
-          <li><span className="dot medium"></span> Médio risco</li>
-          <li><span className="dot high"></span> Alto risco</li>
+          <li>
+            <span className="dot high"></span>
+            <span>Alto</span>
+            <span className="legend-threshold">chuva &gt;60% · rio &gt;3m</span>
+          </li>
+          <li>
+            <span className="dot medium"></span>
+            <span>Médio</span>
+            <span className="legend-threshold">chuva &gt;30%</span>
+          </li>
+          <li>
+            <span className="dot low"></span>
+            <span>Baixo</span>
+            <span className="legend-threshold">sem alerta</span>
+          </li>
         </ul>
+        <div className="legend-divider" />
+        <p className="legend-note">Clique em um marcador para ver os detalhes do município.</p>
       </LegendOverlay>
     </MapCard>
   );
 }
 
 export default MapView;
+
+ 
