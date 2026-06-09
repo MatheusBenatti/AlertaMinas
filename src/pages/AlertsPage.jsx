@@ -168,15 +168,16 @@ function AlertsPage() {
 function AlertCreator({ cities, onCreate }) {
   const [form, setForm] = useState({
     id: "",
-    chuva24h: '',
-    nivelRio: '',
+    chuva24h: "",
+    nivelRio: "",
   });
 
   return (
     <AlertForm>
       <h3 className="form-title">Criar ou atualizar alerta</h3>
 
-      {/* SELECT cidades */}
+      <div className="form-group">
+        {/* SELECT cidades */}
       <select
         className="form-input"
         value={form.id}
@@ -189,34 +190,34 @@ function AlertCreator({ cities, onCreate }) {
           </option>
         ))}
       </select>
+        {/* chuva */}
+        <input
+          className="form-input"
+          type="number"
+          placeholder="Chuva 24h (%)"
+          value={form.chuva24h}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              chuva24h: Number(e.target.value),
+            })
+          }
+        />
 
-      {/* chuva */}
-      <input
-        className="form-input"
-        type="number"
-        placeholder="Chuva 24h (%)"
-        value={form.chuva24h}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            chuva24h: Number(e.target.value),
-          })
-        }
-      />
-
-      {/* rio */}
-      <input
-        className="form-input"
-        type="number"
-        placeholder="Nível do rio (m)"
-        value={form.nivelRio}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            nivelRio: Number(e.target.value),
-          })
-        }
-      />
+        {/* rio */}
+        <input
+          className="form-input"
+          type="number"
+          placeholder="Nível do rio (m)"
+          value={form.nivelRio}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              nivelRio: Number(e.target.value),
+            })
+          }
+        />
+      </div>
 
       <button
         className="form-button"

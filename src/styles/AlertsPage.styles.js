@@ -56,7 +56,7 @@ export const DataGrid = styled.div`
 
 export const SimulatedDashboardGrid = styled.div`
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 49% 50%;
   gap: 16px;
 
   @media (max-width: 1200px) {
@@ -190,7 +190,6 @@ export const AlertForm = styled.div`
   border-left: 3px solid #38bdf8;
   border-radius: 16px;
   padding: 16px;
-  margin: 16px 0;
   width: 100%;
 
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
@@ -198,6 +197,11 @@ export const AlertForm = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .form-title {
     font-size: 0.95rem;
@@ -218,6 +222,8 @@ export const AlertForm = styled.div`
     font-size: 0.9rem;
     outline: none;
     transition: all 0.2s ease;
+    flex-grow: 1;
+    margin-right: 5px;
   }
 
   select:focus,
@@ -244,5 +250,7 @@ export const AlertForm = styled.div`
 `;
 
 export const AlertFormWrapper = styled.div`
-  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
 `;
