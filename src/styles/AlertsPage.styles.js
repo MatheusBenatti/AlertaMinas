@@ -1,8 +1,12 @@
-import styled from 'styled-components';
-export { PageSection } from './shared.styles';
+import styled from "styled-components";
+export { PageSection } from "./shared.styles";
 
 export const Card = styled.article`
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(7, 17, 29, 0.98));
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.96),
+    rgba(7, 17, 29, 0.98)
+  );
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 22px;
   box-shadow: 0 18px 36px rgba(8, 15, 24, 0.42);
@@ -70,28 +74,28 @@ export const SimulatedDashboardGrid = styled.div`
 
 export const riskAccentMap = {
   alto: {
-    border: 'rgba(239,68,68,0.4)',
-    left: '#ef4444',
-    bg: 'rgba(239,68,68,0.06)',
-    badgeBg: '#ef4444',
-    badgeColor: '#fff',
-    glow: 'rgba(239,68,68,0.12)',
+    border: "rgba(239,68,68,0.4)",
+    left: "#ef4444",
+    bg: "rgba(239,68,68,0.06)",
+    badgeBg: "#ef4444",
+    badgeColor: "#fff",
+    glow: "rgba(239,68,68,0.12)",
   },
   medio: {
-    border: 'rgba(251,191,36,0.35)',
-    left: '#fbbf24',
-    bg: 'rgba(251,191,36,0.05)',
-    badgeBg: '#fbbf24',
-    badgeColor: '#0f172a',
-    glow: 'rgba(251,191,36,0.10)',
+    border: "rgba(251,191,36,0.35)",
+    left: "#fbbf24",
+    bg: "rgba(251,191,36,0.05)",
+    badgeBg: "#fbbf24",
+    badgeColor: "#0f172a",
+    glow: "rgba(251,191,36,0.10)",
   },
   baixo: {
-    border: 'rgba(34,197,94,0.3)',
-    left: '#22c55e',
-    bg: 'rgba(34,197,94,0.05)',
-    badgeBg: '#22c55e',
-    badgeColor: '#0f172a',
-    glow: 'rgba(34,197,94,0.08)',
+    border: "rgba(34,197,94,0.3)",
+    left: "#22c55e",
+    bg: "rgba(34,197,94,0.05)",
+    badgeBg: "#22c55e",
+    badgeColor: "#0f172a",
+    glow: "rgba(34,197,94,0.08)",
   },
 };
 
@@ -101,12 +105,11 @@ export const riskAccentMap = {
 
 export const DataCard = styled.div`
   background: ${(props) =>
-    riskAccentMap[props.$risk]?.bg || 'rgba(30,41,59,0.6)'};
+    riskAccentMap[props.$risk]?.bg || "rgba(30,41,59,0.6)"};
   border: 1px solid
-    ${(props) =>
-      riskAccentMap[props.$risk]?.border || 'rgba(148,163,184,0.18)'};
+    ${(props) => riskAccentMap[props.$risk]?.border || "rgba(148,163,184,0.18)"};
   border-left: 3px solid
-    ${(props) => riskAccentMap[props.$risk]?.left || '#38bdf8'};
+    ${(props) => riskAccentMap[props.$risk]?.left || "#38bdf8"};
   border-radius: 14px;
   padding: 16px;
   transition: all 0.2s ease;
@@ -114,8 +117,7 @@ export const DataCard = styled.div`
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px
-      ${(props) =>
-        riskAccentMap[props.$risk]?.glow || 'rgba(0,0,0,0.2)'};
+      ${(props) => riskAccentMap[props.$risk]?.glow || "rgba(0,0,0,0.2)"};
   }
 
   .card-top {
@@ -169,10 +171,8 @@ export const DataCard = styled.div`
     text-transform: uppercase;
     letter-spacing: 0.06em;
     flex-shrink: 0;
-    background: ${(props) =>
-      riskAccentMap[props.$risk]?.badgeBg || '#38bdf8'};
-    color: ${(props) =>
-      riskAccentMap[props.$risk]?.badgeColor || '#fff'};
+    background: ${(props) => riskAccentMap[props.$risk]?.badgeBg || "#38bdf8"};
+    color: ${(props) => riskAccentMap[props.$risk]?.badgeColor || "#fff"};
   }
 `;
 
@@ -201,6 +201,7 @@ export const AlertForm = styled.div`
   .form-group {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .form-title {
