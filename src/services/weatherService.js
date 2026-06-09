@@ -11,10 +11,11 @@ export async function getWeather(lat, lon) {
     }
 
     const data = await response.json();
-
     return {
       chuva: data.rain?.['1h'] || 0,
       temperatura: data.main?.temp ?? 0,
+      umidade: data.main?.humidity ?? 0,
+      nivelRio: Math.min(5, chuva * 0.5),
       source: 'OpenWeather',
       status: 'Dados reais do OpenWeather carregados com sucesso.',
     };

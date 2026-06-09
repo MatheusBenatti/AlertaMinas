@@ -24,7 +24,6 @@ function App() {
         <BrowserRouter>
           <Header>
             <HeaderLeft>
-              <HeaderIcon>🌊</HeaderIcon>
               <HeaderContent>
                 <p className="eyebrow">Sistema de Monitoramento - Minas Gerais</p>
                 <h1>AlertaMinas</h1>
